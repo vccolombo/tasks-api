@@ -1,9 +1,11 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-var users = require('./routes/usersRoute');
+require('./services/mongoose');
 
-var app = express();
+const users = require('./routes/usersRoute');
+
+const app = express();
 app.use(bodyParser.json());
 app.use('/users', users);
 
