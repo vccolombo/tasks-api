@@ -7,7 +7,7 @@ exports.create = (req, res, next) => {
     }).catch((error) => {
         console.error(error);
         res.status(400).json({
-            msg: "error"
+            msg: error.message
         });
     });
 }
