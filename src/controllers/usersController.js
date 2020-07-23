@@ -1,6 +1,6 @@
 const User = require('../models/userModel');
 
-exports.create = (req, res, next) => {
+exports.create = async (req, res, next) => {
     // TODO unescape and sanitize the inputs
     const user = new User({
         name: req.body.name, 
@@ -8,37 +8,39 @@ exports.create = (req, res, next) => {
         password: req.body.password
     });
 
-    user.save().then((result) => {
-        // TODO Think if it is returning too much information
+    try {
+        await user.save();
         res.status(201).json(user);
-    }).catch((error) => {
+    } catch (error) {
         console.error(error);
         // TODO Return a better error
         res.status(400).json(error);
-    });
+    }
 };
 
-exports.index = (req, res, next) => {
-    User.find({}).then((result) => {
+exports.index = async (req, res, next) => {
+    try {
+        const result = await User.find({});
         res.status(200).json(result);
-    }).catch((error) => {
+    } catch (error) {
         console.error(error);
         // TODO Return a better error
         res.status(500).json(error);
-    });
+    }
 };
 
-exports.show = (req, res, next) => {
+exports.show = async (req, res, next) => {
     const _id = req.params.id;
 
-    User.findById(_id).then((user) => {
-        if (!user) {
+    try {
+        const result = await User.findById(_id);
+        if (!result) {
             return res.status(404).json({});
         }
-        res.status(200).json(user);
-    }).catch((error) => {
+        res.status(200).send(result);
+    } catch (error) {
         console.error(error);
         // TODO Return a better error
         res.status(500).json(error);
-    });
+    }
 }

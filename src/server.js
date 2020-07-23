@@ -3,7 +3,7 @@ const mongodb = require('./services/mongoose');
 
 const PORT = process.env.PORT || 3000;
 
-const start = async function() {
+const start = async () => {
     await mongodb.connect();
 
     app.listen(PORT, () => {
