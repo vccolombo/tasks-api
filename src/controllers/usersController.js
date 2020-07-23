@@ -24,6 +24,21 @@ exports.index = (req, res, next) => {
     }).catch((error) => {
         console.error(error);
         // TODO Return a better error
-        res.status(400).json(error);
+        res.status(500).json(error);
     });
 };
+
+exports.show = (req, res, next) => {
+    const _id = req.params.id;
+
+    User.findById(_id).then((user) => {
+        if (!user) {
+            return res.status(404).json({});
+        }
+        res.status(200).json(user);
+    }).catch((error) => {
+        console.error(error);
+        // TODO Return a better error
+        res.status(500).json(error);
+    });
+}
