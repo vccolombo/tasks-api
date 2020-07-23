@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const TaskStatusEnum = require('./enums/taskStatusEnum');
+const TaskStatusEnum = require('./enums/TaskStatusEnum');
 
 const taskSchema = mongoose.Schema({
     title: {
