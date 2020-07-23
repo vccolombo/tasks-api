@@ -2,6 +2,18 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        unique: true,
+        required: true,
+        trim: true,
+        validate: {
+            validator: function(v) {
+                return validator.isAlphanumeric(v);
+            },
+            message: "username invalid"
+        }
+    },
     name: {
         type: String,
         required: true,
@@ -16,8 +28,8 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true,
         unique: true,
+        required: true,
         validate: {
             validator: function(v) {
                 return validator.isEmail(v);

@@ -3,6 +3,7 @@ const User = require('../models/userModel');
 exports.create = (req, res, next) => {
     // TODO unescape and sanitize the inputs
     const user = new User({
+        username: req.body.username,
         name: req.body.name, 
         email: req.body.email, 
         password: req.body.password
@@ -29,9 +30,12 @@ exports.index = (req, res, next) => {
 };
 
 exports.show = (req, res, next) => {
-    const _id = req.params.id;
+    // TODO unescape and sanitize the inputs
+    const username = {
+        username: req.params.username
+    }
 
-    User.findById(_id).then((user) => {
+    User.findOne(username).then((user) => {
         if (!user) {
             return res.status(404).json({});
         }
