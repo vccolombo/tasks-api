@@ -16,8 +16,8 @@ exports.create = async (req, res, next) => {
 
 exports.index = async (req, res, next) => {
     try {
-        const result = await User.find({});
-        res.status(200).json(result);
+        const users = await User.find({});
+        res.status(200).json(users);
     } catch (error) {
         console.error(error);
         // TODO Return a better error
@@ -29,11 +29,11 @@ exports.show = async (req, res, next) => {
     const id = req.params.id;
 
     try {
-        const result = await User.findById(id);
-        if (!result) {
+        const user = await User.findById(id);
+        if (!user) {
             return res.status(404).json();
         }
-        res.status(200).send(result);
+        res.status(200).send(user);
     } catch (error) {
         console.error(error);
         // TODO Return a better error
@@ -56,6 +56,8 @@ exports.update = async (req, res, next) => {
         }
         res.status(200).json(user);
     } catch (error) {
+        console.error(error);
+        // TODO Return a better error
         res.status(400).json(error);
     }
 }
