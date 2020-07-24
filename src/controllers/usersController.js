@@ -2,11 +2,7 @@ const User = require('../models/userModel');
 
 exports.create = async (req, res, next) => {
     // TODO unescape and sanitize the inputs
-    const user = new User({
-        name: req.body.name, 
-        email: req.body.email, 
-        password: req.body.password
-    });
+    const user = new User(req.body);
 
     try {
         await user.save();
@@ -30,17 +26,36 @@ exports.index = async (req, res, next) => {
 };
 
 exports.show = async (req, res, next) => {
-    const _id = req.params.id;
+    const id = req.params.id;
 
     try {
-        const result = await User.findById(_id);
+        const result = await User.findById(id);
         if (!result) {
-            return res.status(404).json({});
+            return res.status(404).json();
         }
         res.status(200).send(result);
     } catch (error) {
         console.error(error);
         // TODO Return a better error
         res.status(500).json(error);
+    }
+}
+
+exports.update = async (req, res, next) => {
+    const id = req.params.id;
+    const body = req.body;
+
+    try {
+        const user = await User.findByIdAndUpdate(id, body, {
+            new: true,
+            runValidators: true
+        });
+
+        if (!user) {
+            return res.status(404).json();
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(400).json(error);
     }
 }
