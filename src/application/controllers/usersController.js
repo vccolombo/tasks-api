@@ -6,6 +6,7 @@ exports.create = async (req, res, next) => {
 
     try {
         await user.save();
+
         res.status(201).json(user);
     } catch (error) {
         console.error(error);
@@ -17,6 +18,7 @@ exports.create = async (req, res, next) => {
 exports.index = async (req, res, next) => {
     try {
         const users = await User.find({});
+
         res.status(200).json(users);
     } catch (error) {
         console.error(error);
@@ -33,6 +35,7 @@ exports.show = async (req, res, next) => {
         if (!user) {
             return res.status(404).json();
         }
+        
         res.status(200).send(user);
     } catch (error) {
         console.error(error);
@@ -47,14 +50,15 @@ exports.update = async (req, res, next) => {
 
     try {
         const user = await User.findById(id);
-        Object.keys(body).forEach((update) => {
-            user[update] = body[update]}
-        );
-        await user.save();
-
         if (!user) {
             return res.status(404).json();
         }
+
+        Object.keys(body).forEach((update) => {
+            user[update] = body[update];
+        });
+        await user.save();
+
         res.status(200).json(user);
     } catch (error) {
         console.error(error);

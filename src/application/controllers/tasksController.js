@@ -5,6 +5,7 @@ exports.create = async (req, res, next) => {
 
     try {
         await task.save();
+
         res.status(201).json(task);
     } catch (error) {
         console.error(error);
@@ -16,6 +17,7 @@ exports.create = async (req, res, next) => {
 exports.index = async (req, res, next) => {
     try {
         const tasks = await Task.find({});
+
         res.status(200).json(tasks);
     } catch (error) {
         console.error(error);
@@ -32,6 +34,7 @@ exports.show = async (req, res, next) => {
         if (!task) {
             return res.status(404).json();
         }
+
         res.status(200).json(task);
     } catch (error) {
         console.error(error);
@@ -45,14 +48,16 @@ exports.update = async (req, res, next) => {
     const body = req.body;
 
     try {
-        const task = await Task.findByIdAndUpdate(id, body, {
-            new: true,
-            runValidators: true
-        });
-
+        const task = await Task.findById(id);
         if (!task) {
             return res.status(404).json();
         }
+
+        Object.keys(body).forEach((update) => {
+            task[update] = body[update];
+        });
+        await task.save();
+
         res.status(200).json(task);
     } catch (error) {
         console.error(error);
@@ -66,7 +71,6 @@ exports.destroy = async (req, res, next) => {
 
     try {
         const task = await Task.findByIdAndDelete(id);
-
         if(!task) {
             return res.status(404).json();
         }
