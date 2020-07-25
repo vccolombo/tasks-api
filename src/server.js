@@ -1,5 +1,5 @@
-const app = require('./app');
-const mongodb = require('./services/mongoose');
+const app = require('./application/app');
+const mongodb = require('./application/services/mongoose');
 
 const PORT = process.env.PORT || 3000;
 
