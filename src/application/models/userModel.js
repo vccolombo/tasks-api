@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
+const hashPassword = require('../libs/password').hash;
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -30,6 +32,16 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: [8, "Password too short"]
     }
+});
+
+userSchema.pre('save', async function(next) {
+    const user = this;
+
+    if (user.isModified('password')) {
+        user.password = await hashPassword(user.password);
+    }
+
+    next();
 });
 
 const User = mongoose.model('User', userSchema);

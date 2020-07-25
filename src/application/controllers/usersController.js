@@ -46,10 +46,11 @@ exports.update = async (req, res, next) => {
     const body = req.body;
 
     try {
-        const user = await User.findByIdAndUpdate(id, body, {
-            new: true,
-            runValidators: true
-        });
+        const user = await User.findById(id);
+        Object.keys(body).forEach((update) => {
+            user[update] = body[update]}
+        );
+        await user.save();
 
         if (!user) {
             return res.status(404).json();
