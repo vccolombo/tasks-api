@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const hashPassword = require('../libs/password').hash;
-const comparePassword = require('../libs/password').compare;
+const { hashPassword, comparePassword } = require('../libs/password');
+const auth = require('../libs/auth');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -33,8 +33,24 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: [8, "Password too short"]
-    }
+    },
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }]
 });
+
+userSchema.methods.generateAuthToken = async function() {
+    const user = this;
+    const token = auth.sign(user._id);
+
+    user.tokens = user.tokens.concat({ token });
+    await user.save();
+
+    return token;
+}
 
 userSchema.statics.findByCredentials = async (email, password) => {
     const normalizedEmail = validator.normalizeEmail(email);

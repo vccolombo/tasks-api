@@ -6,14 +6,30 @@ exports.create = async (req, res, next) => {
 
     try {
         await user.save();
+        const token = await user.generateAuthToken();
 
-        res.status(201).json(user);
+        res.status(201).json({ user, token });
     } catch (error) {
         console.error(error);
         // TODO Return a better error
         res.status(400).json(error);
     }
-};
+}
+
+exports.login = async (req, res, next) => {
+    const body = req.body;
+
+    try {
+        const user = await User.findByCredentials(body.email, body.password);
+        const token = await user.generateAuthToken();
+        
+        res.status(200).json({ user, token });
+    } catch (error) {
+        console.error(error);
+        // TODO Return a better error
+        res.status(400).json(error);
+    }
+}
 
 exports.index = async (req, res, next) => {
     try {
@@ -25,7 +41,7 @@ exports.index = async (req, res, next) => {
         // TODO Return a better error
         res.status(500).json(error);
     }
-};
+}
 
 exports.show = async (req, res, next) => {
     const id = req.params.id;

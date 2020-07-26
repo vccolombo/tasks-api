@@ -11,5 +11,5 @@ const connect = async (connURL) => {
     console.log("Connected to mongodb with success");
 }
 
-module.exports = { connect };
+module.exports = { connect }
 

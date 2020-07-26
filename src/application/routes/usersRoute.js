@@ -4,6 +4,7 @@ const router = express.Router();
 const controller = require('../controllers/usersController');
 
 router.post('/', controller.create);
+router.post('/login', controller.login);
 router.get('/', controller.index);
 router.get('/:id', controller.show);
 router.patch('/:id', controller.update);
