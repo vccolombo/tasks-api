@@ -77,6 +77,8 @@ exports.destroy = async (req, res, next) => {
 
         res.status(200).json(task);
     } catch (error) {
+        console.error(error);
+        // TODO Return a better error
         res.status(500).json(error);
     }
 }

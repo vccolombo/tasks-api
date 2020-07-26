@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 
 const hashPassword = require('../libs/password').hash;
+const comparePassword = require('../libs/password').compare;
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -20,6 +21,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+        trim: true,
         validate: {
             validator: function(v) {
                 return validator.isEmail(v);
@@ -34,11 +36,30 @@ const userSchema = new mongoose.Schema({
     }
 });
 
+userSchema.statics.findByCredentials = async (email, password) => {
+    const normalizedEmail = validator.normalizeEmail(email);
+
+    const user = await User.findOne({ email: normalizedEmail });
+    if (!user) {
+        throw new Error('Unable to login');
+    }
+
+    const isMatch = await comparePassword(password, user.password);
+    if (!isMatch) {
+        throw new Error('Unable to login');
+    }
+
+    return user;
+}
+
 userSchema.pre('save', async function(next) {
     const user = this;
 
     if (user.isModified('password')) {
         user.password = await hashPassword(user.password);
+    }
+    if (user.isModified('email')) {
+        user.email = validator.normalizeEmail(user.email);
     }
 
     next();
