@@ -11,4 +11,10 @@ app.use('/users', users);
 app.use('/tasks', tasks);
 app.use('/login', login);
 
-module.exports = app;
+const start = (port) => {
+    return app.listen(port, () => {
+        console.log('Server running on port', port);
+    });
+}
+
+module.exports = { start };

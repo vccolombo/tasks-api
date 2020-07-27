@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
 
-const DB_CONN = 'mongodb://localhost:27017/task-manager-dev';
-
-const connect = async () => {
-    console.log("Connecting to mongodb:", DB_CONN);
-    await mongoose.connect(DB_CONN, {
+const connect = async (connURL) => {
+    console.log("Connecting to mongodb:", connURL);
+    await mongoose.connect(connURL, {
         useNewUrlParser: true, 
         useUnifiedTopology: true,
         useCreateIndex: true,
