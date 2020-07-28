@@ -59,11 +59,11 @@ exports.show = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-    const id = req.params.id;
+    const _id = req._id;
     const body = req.body;
 
     try {
-        const user = await User.findById(id);
+        const user = await User.findById(_id);
         if (!user) {
             return res.status(404).json();
         }

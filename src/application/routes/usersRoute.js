@@ -9,6 +9,6 @@ router.post('/', controller.create);
 router.post('/login', controller.login);
 router.get('/profile', middleware.auth, controller.profile);
 router.get('/:id', controller.show);
-router.patch('/:id', controller.update);
+router.patch('/profile', middleware.auth, controller.update);
 
 module.exports = router;
