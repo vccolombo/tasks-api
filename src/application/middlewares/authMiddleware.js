@@ -4,7 +4,7 @@ const { authVerify } = require('../libs/auth');
 
 exports.auth = async (req, res, next) => {
     try {
-        const token = req.header('Authorization').replace('Bearer', '');
+        const token = req.header('Authorization').replace('Bearer ', '');
 
         const validated = authVerify(token);
         req._id = validated._id;
