@@ -1,6 +1,6 @@
 const User = require('../models/userModel');
 
-exports.create = async (req, res, next) => {
+exports.create = async (req, res) => {
     // TODO unescape and sanitize the inputs
     const user = new User(req.body);
 
@@ -16,7 +16,7 @@ exports.create = async (req, res, next) => {
     }
 }
 
-exports.login = async (req, res, next) => {
+exports.login = async (req, res) => {
     const body = req.body;
 
     try {
@@ -31,19 +31,11 @@ exports.login = async (req, res, next) => {
     }
 }
 
-exports.index = async (req, res, next) => {
-    try {
-        const users = await User.find({});
-
-        res.status(200).json(users);
-    } catch (error) {
-        console.error(error);
-        // TODO Return a better error
-        res.status(500).json(error);
-    }
+exports.index = async (req, res) => {
+    res.status(200).json(req.user);
 }
 
-exports.show = async (req, res, next) => {
+exports.show = async (req, res) => {
     const id = req.params.id;
 
     try {
@@ -60,7 +52,7 @@ exports.show = async (req, res, next) => {
     }
 }
 
-exports.update = async (req, res, next) => {
+exports.update = async (req, res) => {
     const id = req.params.id;
     const body = req.body;
 

@@ -5,6 +5,11 @@ const users = require('./routes/usersRoute');
 const tasks = require('./routes/tasksRoute');
 
 const app = express();
+
+// app.use((req, res, next) => {
+//     res.status(583).send("Site under maintance. Come back later.");
+// });
+
 app.use(bodyParser.json());
 app.use('/users', users);
 app.use('/tasks', tasks);

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 
 const { hashPassword, comparePassword } = require('../libs/password');
-const auth = require('../libs/auth');
+const { authSign } = require('../libs/auth');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.methods.generateAuthToken = async function() {
     const user = this;
-    const token = auth.sign(user._id);
+    const token = authSign(user._id);
 
     user.tokens = user.tokens.concat({ token });
     await user.save();

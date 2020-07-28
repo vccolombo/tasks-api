@@ -1,11 +1,13 @@
 const express = require('express');
-const router = express.Router();
 
 const controller = require('../controllers/usersController');
+const middleware = require('../middlewares/authMiddleware');
+
+const router = express.Router();
 
 router.post('/', controller.create);
 router.post('/login', controller.login);
-router.get('/', controller.index);
+router.get('/profile', middleware.auth, controller.index);
 router.get('/:id', controller.show);
 router.patch('/:id', controller.update);
 
