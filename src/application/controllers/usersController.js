@@ -29,6 +29,10 @@ exports.login = async (req, res) => {
     }
 }
 
+exports.logout = async (req, res) => {
+    res.status(200).json({ token: null });
+}
+
 exports.profile = async (req, res) => {
     try {
         const user = await User.findById(req._id);
