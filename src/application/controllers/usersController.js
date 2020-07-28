@@ -1,10 +1,8 @@
 const User = require('../models/userModel');
 
 exports.create = async (req, res) => {
-    // TODO unescape and sanitize the inputs
-    const user = new User(req.body);
-
     try {
+        const user = new User(req.body);
         await user.save();
         const token = await user.generateAuthToken();
 

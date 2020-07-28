@@ -33,21 +33,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: [8, "Password too short"]
-    },
-    tokens: [{
-        token: {
-            type: String,
-            required: true
-        }
-    }]
+    }
 });
 
 userSchema.methods.generateAuthToken = async function() {
     const user = this;
-    const token = authSign(user._id);
-
-    user.tokens = user.tokens.concat({ token });
-    await user.save();
+    const token = authSign({ _id: user._id });
 
     return token;
 }

@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken');
 
 const SECRET = process.env.JWT_SECRET || "dev-secret";
 
-const authSign = (_id) => {
-    return jwt.sign({ _id }, SECRET);
+const authSign = (data) => {
+    return jwt.sign(data, SECRET);
 }
 
 const authVerify = (token) => {
