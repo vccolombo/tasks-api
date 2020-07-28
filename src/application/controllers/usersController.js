@@ -31,8 +31,16 @@ exports.login = async (req, res) => {
     }
 }
 
-exports.index = async (req, res) => {
-    res.status(200).json(req.user);
+exports.profile = async (req, res) => {
+    try {
+        const user = await User.findById(req._id);
+        
+        res.status(200).json(user);
+    } catch (error) {
+        console.error(error);
+        // TODO Return a better error
+        res.status(500).json(error);
+    }
 }
 
 exports.show = async (req, res) => {

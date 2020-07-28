@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post('/', controller.create);
 router.post('/login', controller.login);
-router.get('/profile', middleware.auth, controller.index);
+router.get('/profile', middleware.auth, controller.profile);
 router.get('/:id', controller.show);
 router.patch('/:id', controller.update);
 
