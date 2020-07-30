@@ -41,8 +41,9 @@ exports.profile = async (req, res) => {
     try {
         const user = await User.findById(userId);
         await user.populate('boards').execPopulate();
+        const boards = user.boards;
 
-        res.status(200).json(user);
+        res.status(200).json({ user, boards });
     } catch (error) {
         console.error(error);
         // TODO Return a better error

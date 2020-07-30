@@ -13,6 +13,12 @@ const boardSchema = new mongoose.Schema({
     }
 });
 
+boardSchema.virtual('tasks', {
+    ref: 'Task',
+    localField: '_id',
+    foreignField: 'board'
+});
+
 const Board = mongoose.model('Board', boardSchema);
 
 module.exports = Board;

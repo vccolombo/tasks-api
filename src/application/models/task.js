@@ -17,6 +17,11 @@ const taskSchema = new mongoose.Schema({
         required: true,
         enum: Object.values(TaskStatusEnum),
         default: TaskStatusEnum.TODO
+    },
+    board: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Board'
     }
 });
 

@@ -3,6 +3,9 @@ const Task = require('../models/task');
 exports.create = async (req, res) => {
     const data = req.body;
 
+    // TODO do something about the user being able to create
+    // tasks in boards they do not own (validate the board ownership)
+
     try {
         const task = new Task(data);
         await task.save();
