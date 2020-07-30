@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const users = require('./routes/usersRoute');
-const tasks = require('./routes/tasksRoute');
+const users = require('./routes/users');
+const tasks = require('./routes/tasks');
 
 const app = express();
 
