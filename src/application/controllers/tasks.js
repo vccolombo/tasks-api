@@ -1,13 +1,17 @@
 const Task = require('../models/task');
 
 exports.create = async (req, res) => {
+    const userId = req.userId;
     const data = req.body;
-
-    // TODO do something about the user being able to create
-    // tasks in boards they do not own (validate the board ownership)
 
     try {
         const task = new Task(data);
+
+        const authorized = await isAuthorized(task, userId);
+        if (!authorized) {
+            return res.status(403).json();
+        }
+
         await task.save();
 
         res.status(201).json(task);
@@ -22,6 +26,7 @@ exports.create = async (req, res) => {
 // Before: I must implement a system that indicates to whom a task is assigned
 
 exports.update = async (req, res) => {
+    const userId = req.userId;
     const taskId = req.params.id;
     const data = req.body;
 
@@ -29,6 +34,11 @@ exports.update = async (req, res) => {
         const task = await Task.findById(taskId);
         if (!task) {
             return res.status(404).json();
+        }
+
+        const authorized = await isAuthorized(task, userId);
+        if (!authorized) {
+            return res.status(403).json();
         }
 
         Object.keys(data).forEach((update) => {
@@ -45,6 +55,7 @@ exports.update = async (req, res) => {
 }
 
 exports.destroy = async (req, res) => {
+    const userId = req.userId;
     const taskId = req.params.id
 
     try {
@@ -53,10 +64,23 @@ exports.destroy = async (req, res) => {
             return res.status(404).json();
         }
 
+        const authorized = await isAuthorized(task, userId);
+        if (!authorized) {
+            return res.status(403).json();
+        }
+
         res.status(200).json(task);
     } catch (error) {
         console.error(error);
         // TODO Return a better error
         res.status(500).json(error);
     }
+}
+
+const isAuthorized = async (task, userId) => {
+    await task.populate('board').execPopulate();
+    const authorized = task.board.owner.toString() === userId;
+    await task.depopulate('board');
+
+    return authorized;
 }

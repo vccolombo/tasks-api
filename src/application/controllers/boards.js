@@ -20,14 +20,12 @@ exports.create = async (req, res) => {
 
 exports.show = async (req, res) => {
     const boardId = req.params.id;
-
-    // TODO check if the user should be able to access this table
-    // right now the user can access boards from other users.
+    const userId = req.userId;
 
     try {
-        const board = await Board.findById(boardId);
+        const board = await Board.findOne({ _id: boardId, owner: userId });
         if (!board) {
-            return res.send(404).json();
+            return res.status(404).json();
         }
 
         await board.populate('tasks').execPopulate();
