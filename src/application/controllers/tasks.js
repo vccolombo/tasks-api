@@ -19,24 +19,7 @@ exports.create = async (req, res) => {
 }
 
 // TODO: Reimplement the index route where the result is all the tasks assigned to a user
-// Before that I must implement a system that indicates to whom a task is assigned
-
-exports.show = async (req, res) => {
-    const taskId = req.params.id;
-
-    try {
-        const task = await Task.findById(taskId);
-        if (!task) {
-            return res.status(404).json();
-        }
-
-        res.status(200).json(task);
-    } catch (error) {
-        console.error(error);
-        // TODO Return a better error
-        res.status(500).json(error);
-    }
-}
+// Before: I must implement a system that indicates to whom a task is assigned
 
 exports.update = async (req, res) => {
     const taskId = req.params.id;
