@@ -19,6 +19,8 @@ exports.create = async (req, res) => {
 }
 
 exports.index = async (req, res) => {
+    const userId = req.userId;
+
     try {
         const tasks = await Task.find({});
 
