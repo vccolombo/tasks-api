@@ -1,8 +1,10 @@
 const User = require('../models/user');
 
 exports.create = async (req, res) => {
+    const data = req.body;
+    
     try {
-        const user = new User(req.body);
+        const user = new User(data);
         await user.save();
         const token = await user.generateAuthToken();
 
@@ -15,10 +17,10 @@ exports.create = async (req, res) => {
 }
 
 exports.login = async (req, res) => {
-    const body = req.body;
+    const { email, password } = req.body;
 
     try {
-        const user = await User.findByCredentials(body.email, body.password);
+        const user = await User.findByCredentials(email, password);
         const token = await user.generateAuthToken();
         
         res.status(200).json({ user, token });
@@ -34,8 +36,10 @@ exports.logout = async (req, res) => {
 }
 
 exports.profile = async (req, res) => {
+    const userId = req.userId;
+
     try {
-        const user = await User.findById(req.userId);
+        const user = await User.findById(userId);
         await user.populate('boards').execPopulate();
 
         res.status(200).json(user);
@@ -64,14 +68,17 @@ exports.show = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
+    const userId = req.userId;
+    const data = req.body;
+
     try {
-        const user = await User.findById(req.userId);
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json();
         }
 
-        Object.keys(req.body).forEach((update) => {
-            user[update] = req.body[update];
+        Object.keys(data).forEach((update) => {
+            user[update] = data[update];
         });
         await user.save();
 

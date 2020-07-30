@@ -1,8 +1,10 @@
 const Task = require('../models/task');
 
 exports.create = async (req, res) => {
+    const data = req.body;
+
     try {
-        const task = new Task(req.body);
+        const task = new Task(data);
         await task.save();
 
         res.status(201).json(task);
@@ -26,10 +28,10 @@ exports.index = async (req, res) => {
 }
 
 exports.show = async (req, res) => {
-    const id = req.params.id;
+    const taskId = req.params.id;
 
     try {
-        const task = await Task.findById(id);
+        const task = await Task.findById(taskId);
         if (!task) {
             return res.status(404).json();
         }
@@ -43,17 +45,17 @@ exports.show = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-    const id = req.params.id;
-    const body = req.body;
+    const taskId = req.params.id;
+    const data = req.body;
 
     try {
-        const task = await Task.findById(id);
+        const task = await Task.findById(taskId);
         if (!task) {
             return res.status(404).json();
         }
 
-        Object.keys(body).forEach((update) => {
-            task[update] = body[update];
+        Object.keys(data).forEach((update) => {
+            task[update] = data[update];
         });
         await task.save();
 
@@ -66,10 +68,10 @@ exports.update = async (req, res) => {
 }
 
 exports.destroy = async (req, res) => {
-    const id = req.params.id
+    const taskId = req.params.id
 
     try {
-        const task = await Task.findByIdAndDelete(id);
+        const task = await Task.findByIdAndDelete(taskId);
         if(!task) {
             return res.status(404).json();
         }

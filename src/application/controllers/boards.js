@@ -4,7 +4,7 @@ exports.create = async (req, res) => {
     const data = {
         owner: req.userId,
         ...req.body
-    }
+    };
 
     try {
         const board = new Board(data);
