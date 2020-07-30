@@ -35,8 +35,9 @@ exports.logout = async (req, res) => {
 
 exports.profile = async (req, res) => {
     try {
-        const user = await User.findById(req._id);
-        
+        const user = await User.findById(req.userId);
+        await user.populate('boards').execPopulate();
+
         res.status(200).json(user);
     } catch (error) {
         console.error(error);
@@ -46,10 +47,10 @@ exports.profile = async (req, res) => {
 }
 
 exports.show = async (req, res) => {
-    const id = req.params.id;
+    const userId = req.params.id;
 
     try {
-        const user = await User.findById(id);
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json();
         }
@@ -63,17 +64,14 @@ exports.show = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-    const _id = req._id;
-    const body = req.body;
-
     try {
-        const user = await User.findById(_id);
+        const user = await User.findById(req.userId);
         if (!user) {
             return res.status(404).json();
         }
 
-        Object.keys(body).forEach((update) => {
-            user[update] = body[update];
+        Object.keys(req.body).forEach((update) => {
+            user[update] = req.body[update];
         });
         await user.save();
 

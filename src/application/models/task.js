@@ -3,7 +3,7 @@ const validator = require('validator');
 
 const TaskStatusEnum = require('./enums/TaskStatusEnum');
 
-const taskSchema = mongoose.Schema({
+const taskSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true

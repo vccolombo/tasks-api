@@ -1,16 +1,15 @@
 const Task = require('../models/task');
 
 exports.create = async (req, res) => {
-    const task = new Task(req.body);
-
     try {
+        const task = new Task(req.body);
         await task.save();
 
         res.status(201).json(task);
     } catch (error) {
         console.error(error);
         // TODO Return a better error
-        res.status(500).json(error);
+        res.status(400).json(error);
     }
 }
 

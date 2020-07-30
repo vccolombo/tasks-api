@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 
 const users = require('./routes/users');
 const tasks = require('./routes/tasks');
+const boards = require('./routes/boards');
 
 const app = express();
 
@@ -13,6 +14,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use('/users', users);
 app.use('/tasks', tasks);
+app.use('/boards', boards);
 
 const start = (port) => {
     return app.listen(port, () => {
