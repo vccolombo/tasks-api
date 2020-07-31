@@ -76,11 +76,15 @@ userSchema.statics.findByCredentials = async (email, password) => {
 userSchema.pre('save', async function(next) {
     const user = this;
 
-    if (user.isModified('password')) {
-        user.password = await hashPassword(user.password);
+    if (user.isModified('name')) {
+        // Remove extra spaces from name
+        user.name = user.name.replace(/\s+/g, ' ').trim();
     }
     if (user.isModified('email')) {
         user.email = validator.normalizeEmail(user.email);
+    }
+    if (user.isModified('password')) {
+        user.password = await hashPassword(user.password);
     }
 
     next();
