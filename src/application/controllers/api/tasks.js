@@ -66,12 +66,10 @@ exports.deleteTask = async (req, res) => {
     const taskId = req.params.taskId
 
     try {
-        const task = await Task.findById(taskId);
+        const task = await Task.findByIdAndDelete(taskId);
         if(!task) {
             return res.status(404).json();
         }
-
-        await task.remove();
 
         res.status(200).json(task);
     } catch (error) {
