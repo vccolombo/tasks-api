@@ -1,4 +1,4 @@
-const Board = require('../models/board');
+const Board = require('../../models/board');
 
 exports.create = async (req, res) => {
     const data = {
