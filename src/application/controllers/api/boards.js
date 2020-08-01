@@ -1,6 +1,6 @@
 const Board = require('../../models/board');
 
-exports.create = async (req, res) => {
+exports.createBoard = async (req, res) => {
     const data = {
         owner: req.userId,
         ...req.body
@@ -18,7 +18,7 @@ exports.create = async (req, res) => {
     }
 }
 
-exports.show = async (req, res) => {
+exports.readBoard = async (req, res) => {
     const boardId = req.params.boardId;
     const userId = req.userId;
 
@@ -39,7 +39,7 @@ exports.show = async (req, res) => {
     }
 }
 
-exports.update = async (req, res) => {
+exports.updateBoard = async (req, res) => {
     const boardId = req.params.boardId;
     const userId = req.userId;
     const data = req.body;
@@ -63,7 +63,7 @@ exports.update = async (req, res) => {
     }
 }
 
-exports.destroy = async (req, res) => {
+exports.deleteBoard = async (req, res) => {
     const boardId = req.params.boardId;
     const userId = req.userId;
 

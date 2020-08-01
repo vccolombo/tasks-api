@@ -1,6 +1,6 @@
 const Task = require('../../models/task');
 
-exports.create = async (req, res) => {
+exports.createTask = async (req, res) => {
     const userId = req.userId;
     const data = req.body;
 
@@ -25,7 +25,7 @@ exports.create = async (req, res) => {
 // TODO: Reimplement the index route where the result is all the tasks assigned to a user
 // Before: I must implement a system that indicates to whom a task is assigned
 
-exports.show = async (req, res) => {
+exports.readTask = async (req, res) => {
     const userId = req.userId;
     const taskId = req.params.taskId
 
@@ -48,7 +48,7 @@ exports.show = async (req, res) => {
     }
 }
 
-exports.update = async (req, res) => {
+exports.updateTask = async (req, res) => {
     const userId = req.userId;
     const taskId = req.params.taskId;
     const data = req.body;
@@ -77,7 +77,7 @@ exports.update = async (req, res) => {
     }
 }
 
-exports.destroy = async (req, res) => {
+exports.deleteTask = async (req, res) => {
     const userId = req.userId;
     const taskId = req.params.taskId
 

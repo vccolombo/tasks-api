@@ -1,6 +1,6 @@
 const User = require('../../models/user');
 
-exports.create = async (req, res) => {
+exports.createUser = async (req, res) => {
     const data = req.body;
     
     try {
@@ -32,7 +32,7 @@ exports.me = async (req, res) => {
     }
 }
 
-exports.show = async (req, res) => {
+exports.readUser = async (req, res) => {
     const userId = req.params.userId;
 
     try {
@@ -49,7 +49,7 @@ exports.show = async (req, res) => {
     }
 }
 
-exports.update = async (req, res) => {
+exports.updateUser = async (req, res) => {
     const userId = req.userId;
     const data = req.body;
 
