@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const { authVerify } = require('../libs/auth');
 
-const auth = async (req, res, next) => {
+exports.verifyAuthentication = async (req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '');
 
@@ -15,5 +15,3 @@ const auth = async (req, res, next) => {
         res.status(401).json({ "error": "Authentication failed" });
     }
 }
-
-module.exports = auth;

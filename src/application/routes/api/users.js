@@ -1,13 +1,13 @@
 const express = require('express');
 
 const controller = require('../../controllers/api/users');
-const authMiddleware = require('../../middlewares/auth');
+const { verifyAuthentication } = require('../../middlewares/authentication');
 
 const router = express.Router();
 
 router.post('/', controller.createUser);
-router.get('/me', authMiddleware, controller.readMe);
-router.patch('/me', authMiddleware, controller.updateMe);
-router.get('/:userId', authMiddleware, controller.readUser);
+router.get('/me', verifyAuthentication, controller.readMe);
+router.patch('/me', verifyAuthentication, controller.updateMe);
+router.get('/:userId', verifyAuthentication, controller.readUser);
 
 module.exports = router;

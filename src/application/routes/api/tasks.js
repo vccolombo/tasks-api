@@ -1,14 +1,15 @@
 const express = require('express');
 
 const controller = require('../../controllers/api/tasks');
-const authMiddleware = require('../../middlewares/auth');
+const { verifyAuthentication } = require('../../middlewares/authentication');
+const { verifyBoardAuthorization } = require('../../middlewares/authorization');
 
 const router = express.Router({mergeParams: true});
 
-router.post('/', authMiddleware, controller.createTask);
-router.get('/:taskId', authMiddleware, controller.readTask);
-router.patch('/:taskId', authMiddleware, controller.updateTask);
-router.delete('/:taskId', authMiddleware, controller.deleteTask);
+router.post('/', [verifyAuthentication, verifyBoardAuthorization], controller.createTask);
+router.get('/:taskId', [verifyAuthentication, verifyBoardAuthorization], controller.readTask);
+router.patch('/:taskId', [verifyAuthentication, verifyBoardAuthorization], controller.updateTask);
+router.delete('/:taskId', [verifyAuthentication, verifyBoardAuthorization], controller.deleteTask);
 
 module.exports = router;
 

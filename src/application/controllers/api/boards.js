@@ -1,5 +1,4 @@
 const Board = require('../../models/board');
-const Task = require('../../models/task');
 
 exports.createBoard = async (req, res) => {
     const data = {
@@ -20,15 +19,9 @@ exports.createBoard = async (req, res) => {
 }
 
 exports.readBoard = async (req, res) => {
-    const boardId = req.params.boardId;
-    const userId = req.userId;
+    const board = req.board;
 
     try {
-        const board = await Board.findOne({ _id: boardId, owner: userId });
-        if (!board) {
-            return res.status(404).json();
-        }
-
         await board.populate('tasks').execPopulate();
         const tasks = board.tasks;
 
@@ -41,16 +34,10 @@ exports.readBoard = async (req, res) => {
 }
 
 exports.updateBoard = async (req, res) => {
-    const boardId = req.params.boardId;
-    const userId = req.userId;
+    const board = req.board;
     const data = req.body;
 
     try {
-        const board = await Board.findOne({ _id: boardId, owner: userId });
-        if (!board) {
-            return res.status(404).json();
-        }
-
         Object.keys(data).forEach((update) => {
             board[update] = data[update];
         });
@@ -65,15 +52,9 @@ exports.updateBoard = async (req, res) => {
 }
 
 exports.deleteBoard = async (req, res) => {
-    const boardId = req.params.boardId;
-    const userId = req.userId;
+    const board = req.board;
 
     try {
-        const board = await Board.findOne({ _id: boardId, owner: userId });
-        if (!board) {
-            return res.status(404).json();
-        }
-
         await board.remove();
 
         res.status(200).json(board);
