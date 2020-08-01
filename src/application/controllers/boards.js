@@ -38,3 +38,47 @@ exports.show = async (req, res) => {
         res.status(500).json(error);
     }
 }
+
+exports.update = async (req, res) => {
+    const boardId = req.params.id;
+    const userId = req.userId;
+    const data = req.body;
+
+    try {
+        const board = await Board.findOne({ _id: boardId, owner: userId });
+        if (!board) {
+            return res.status(404).json();
+        }
+
+        Object.keys(data).forEach((update) => {
+            board[update] = data[update];
+        });
+        await board.save();
+
+        res.status(200).json(board);
+    } catch (error) {
+        console.error(error);
+        // TODO Return a better error
+        res.status(500).json(error);
+    }
+}
+
+exports.destroy = async (req, res) => {
+    const boardId = req.params.id;
+    const userId = req.userId;
+
+    try {
+        const board = await Board.findOne({ _id: boardId, owner: userId });
+        if (!board) {
+            return res.status(404).json();
+        }
+
+        await board.remove();
+
+        res.status(200).json(board);
+    } catch (error) {
+        console.error(error);
+        // TODO Return a better error
+        res.status(500).json(error);
+    }
+}

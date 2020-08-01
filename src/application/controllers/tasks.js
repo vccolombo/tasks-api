@@ -82,7 +82,7 @@ exports.destroy = async (req, res) => {
     const taskId = req.params.id
 
     try {
-        const task = await Task.findByIdAndDelete(taskId);
+        const task = await Task.findById(taskId);
         if(!task) {
             return res.status(404).json();
         }
@@ -91,6 +91,8 @@ exports.destroy = async (req, res) => {
         if (!authorized) {
             return res.status(403).json();
         }
+
+        await task.remove();
 
         res.status(200).json(task);
     } catch (error) {
