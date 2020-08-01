@@ -14,10 +14,9 @@ app.use('/api/boards', boardsRouter);
 app.use('/api/boards/:boardId/tasks', tasksRouter);
 app.use('/auth', authRouter);
 
-const start = (port) => {
+exports.start = (port) => {
     return app.listen(port, () => {
         console.log('Server running on port', port);
     });
 }
 
-module.exports = { start };
