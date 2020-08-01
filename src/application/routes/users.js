@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post('/', controller.create);
 router.get('/me', authMiddleware, controller.me);
-router.get('/:id', authMiddleware, controller.show);
+router.get('/:userId', authMiddleware, controller.show);
 router.patch('/me', authMiddleware, controller.update);
 
 module.exports = router;

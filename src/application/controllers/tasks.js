@@ -27,7 +27,7 @@ exports.create = async (req, res) => {
 
 exports.show = async (req, res) => {
     const userId = req.userId;
-    const taskId = req.params.id
+    const taskId = req.params.taskId
 
     try {
         const task = await Task.findById(taskId);
@@ -50,7 +50,7 @@ exports.show = async (req, res) => {
 
 exports.update = async (req, res) => {
     const userId = req.userId;
-    const taskId = req.params.id;
+    const taskId = req.params.taskId;
     const data = req.body;
 
     try {
@@ -79,7 +79,7 @@ exports.update = async (req, res) => {
 
 exports.destroy = async (req, res) => {
     const userId = req.userId;
-    const taskId = req.params.id
+    const taskId = req.params.taskId
 
     try {
         const task = await Task.findById(taskId);

@@ -33,7 +33,7 @@ exports.me = async (req, res) => {
 }
 
 exports.show = async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.params.userId;
 
     try {
         const user = await User.findById(userId);

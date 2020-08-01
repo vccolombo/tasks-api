@@ -19,7 +19,7 @@ exports.create = async (req, res) => {
 }
 
 exports.show = async (req, res) => {
-    const boardId = req.params.id;
+    const boardId = req.params.boardId;
     const userId = req.userId;
 
     try {
@@ -40,7 +40,7 @@ exports.show = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-    const boardId = req.params.id;
+    const boardId = req.params.boardId;
     const userId = req.userId;
     const data = req.body;
 
@@ -64,7 +64,7 @@ exports.update = async (req, res) => {
 }
 
 exports.destroy = async (req, res) => {
-    const boardId = req.params.id;
+    const boardId = req.params.boardId;
     const userId = req.userId;
 
     try {
