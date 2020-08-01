@@ -11,7 +11,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use('/api/users', usersRouter);
 app.use('/api/boards', boardsRouter);
-app.use('/api/tasks', tasksRouter);
+app.use('/api/boards/:boardId/tasks', tasksRouter);
 app.use('/auth', authRouter);
 
 const start = (port) => {

@@ -2,7 +2,11 @@ const Task = require('../../models/task');
 
 exports.createTask = async (req, res) => {
     const userId = req.userId;
-    const data = req.body;
+    const boardId = req.params.boardId;
+    const data = {
+        ...req.body,
+        board: boardId
+    };
 
     try {
         const task = new Task(data);

@@ -3,7 +3,7 @@ const express = require('express');
 const controller = require('../../controllers/api/tasks');
 const authMiddleware = require('../../middlewares/auth');
 
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
 router.post('/', authMiddleware, controller.createTask);
 router.get('/:taskId', authMiddleware, controller.readTask);

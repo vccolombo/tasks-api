@@ -3,8 +3,8 @@ const Task = require('../../models/task');
 
 exports.createBoard = async (req, res) => {
     const data = {
-        owner: req.userId,
-        ...req.body
+        ...req.body,
+        owner: req.userId
     };
 
     try {
@@ -81,30 +81,5 @@ exports.deleteBoard = async (req, res) => {
         console.error(error);
         // TODO Return a better error
         res.status(500).json(error);
-    }
-}
-
-exports.createTask = async (req, res) => {
-    const boardId = req.params.boardId;
-    const userId = req.userId;
-    const data = {
-        board: boardId,
-        ...req.body
-    };
-
-    try {
-        const board = await Board.findOne({ _id: boardId, owner: userId });
-        if (!board) {
-            return res.status(404).json();
-        }
-
-        const task = new Task(data);
-        await task.save();
-
-        res.status(201).json(task);
-    } catch (error) {
-        console.error(error);
-        // TODO Return a better error
-        res.status(400).json(error);
     }
 }
