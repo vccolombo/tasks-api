@@ -1,5 +1,3 @@
-const jwt = require('jsonwebtoken');
-
 const { authVerify } = require('../libs/auth');
 
 exports.verifyAuthentication = async (req, res, next) => {

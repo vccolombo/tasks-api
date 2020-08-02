@@ -5,7 +5,6 @@ const { verifyAuthentication } = require('../../middlewares/authentication');
 
 const router = express.Router();
 
-router.post('/', controller.createUser);
 router.get('/me', verifyAuthentication, controller.readMe);
 router.patch('/me', verifyAuthentication, controller.updateMe);
 router.get('/:userId', verifyAuthentication, controller.readUser);
