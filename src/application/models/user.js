@@ -34,6 +34,8 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: [8, "Password too short"]
     }
+}, {
+    timestamps: true
 });
 
 userSchema.virtual('boards', {

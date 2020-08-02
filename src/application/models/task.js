@@ -22,6 +22,8 @@ const taskSchema = new mongoose.Schema({
         required: true,
         ref: 'Board'
     }
+}, {
+    timestamps: true
 });
 
 const Task = mongoose.model('Task', taskSchema);
