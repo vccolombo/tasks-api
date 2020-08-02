@@ -65,8 +65,8 @@ userSchema.statics.findByCredentials = async (email, password) => {
         throw new Error('Unable to login');
     }
 
-    const isValidPassword = await comparePassword(password, user.password);
-    if (!isValidPassword) {
+    const isMatch = await comparePassword(password, user.password);
+    if (!isMatch) {
         throw new Error('Unable to login');
     }
 
