@@ -25,7 +25,7 @@ exports.readBoard = async (req, res) => {
         await board.populate('tasks').execPopulate();
         const tasks = board.tasks;
 
-        res.status(200).json({ board, tasks });
+        res.status(200).json(board);
     } catch (error) {
         console.error(error);
         // TODO Return a better error

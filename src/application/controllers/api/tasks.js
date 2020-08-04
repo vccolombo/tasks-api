@@ -1,5 +1,19 @@
 const Task = require('../../models/task');
 
+exports.readAllTasks = async (req, res) => {
+    const board = req.board;
+
+    try {
+        await board.populate('tasks').execPopulate();
+        
+        res.status(200).json(board.tasks);
+    } catch (error) {
+        console.error(error);
+        // TODO Return a better error
+        res.status(500).json(error);
+    }
+}
+
 exports.createTask = async (req, res) => {
     const boardId = req.params.boardId;
     const data = {
