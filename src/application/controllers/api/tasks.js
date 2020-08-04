@@ -38,9 +38,10 @@ exports.createTask = async (req, res) => {
 
 exports.readTask = async (req, res) => {
     const taskId = req.params.taskId
+    const boardId = req.params.boardId;
 
     try {
-        const task = await Task.findById(taskId);
+        const task = await Task.findOne({ _id: taskId, board: boardId });
         if(!task) {
             return res.status(404).json();
         }
@@ -55,10 +56,11 @@ exports.readTask = async (req, res) => {
 
 exports.updateTask = async (req, res) => {
     const taskId = req.params.taskId;
+    const boardId = req.params.boardId;
     const data = req.body;
 
     try {
-        const task = await Task.findById(taskId);
+        const task = await Task.findOne({ _id: taskId, board: boardId });
         if (!task) {
             return res.status(404).json();
         }
@@ -78,12 +80,15 @@ exports.updateTask = async (req, res) => {
 
 exports.deleteTask = async (req, res) => {
     const taskId = req.params.taskId
+    const boardId = req.params.boardId
 
     try {
-        const task = await Task.findByIdAndDelete(taskId);
+        const task = await Task.findOne({ _id: taskId, board: boardId });
         if(!task) {
             return res.status(404).json();
         }
+
+        task.remove();
 
         res.status(200).json(task);
     } catch (error) {
