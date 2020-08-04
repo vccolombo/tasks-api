@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
                 const nameWithoutSpaces = v.replace(/\s+/g, '');
                 return validator.isAlpha(nameWithoutSpaces);
             },
-            message: 'Name invalid'
+            message: "Name invalid"
         }
     },
     email: {
@@ -26,13 +26,13 @@ const userSchema = new mongoose.Schema({
             validator: function(v) {
                 return validator.isEmail(v);
             },
-            message: 'Email invalid'
+            message: "Email invalid"
         }
     },
     password: {
         type: String,
         required: true,
-        minlength: [8, 'Password too short']
+        minlength: [8, "Password too short"]
     }
 }, {
     timestamps: true

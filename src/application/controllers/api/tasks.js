@@ -15,18 +15,15 @@ exports.readAllTasks = async (req, res) => {
 }
 
 exports.createTask = async (req, res) => {
-    const board = req.board;
+    const boardId = req.params.boardId;
     const data = {
         ...req.body,
-        board: board._id
+        board: boardId
     };
 
     try {
         const task = new Task(data);
         await task.save();
-
-        board.tasks.push(task);
-        await board.save();
 
         res.status(201).json(task);
     } catch (error) {
@@ -80,7 +77,6 @@ exports.updateTask = async (req, res) => {
 }
 
 exports.deleteTask = async (req, res) => {
-    const board = req.board;
     const taskId = req.params.taskId
 
     try {
@@ -88,9 +84,6 @@ exports.deleteTask = async (req, res) => {
         if(!task) {
             return res.status(404).json();
         }
-
-        board.tasks.pop(task);
-        await board.save();
 
         res.status(200).json(task);
     } catch (error) {
