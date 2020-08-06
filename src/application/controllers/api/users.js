@@ -14,7 +14,7 @@ exports.readMe = async (req, res) => {
         // TODO Return a better error
         res.status(500).json(error);
     }
-}
+};
 
 exports.updateMe = async (req, res) => {
     const userId = req.userId;
@@ -37,7 +37,7 @@ exports.updateMe = async (req, res) => {
         // TODO Return a better error
         res.status(400).json(error);
     }
-}
+};
 
 exports.readUser = async (req, res) => {
     const userId = req.params.userId;
@@ -54,4 +54,4 @@ exports.readUser = async (req, res) => {
         // TODO Return a better error
         res.status(500).json(error);
     }
-}
+};

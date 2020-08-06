@@ -16,7 +16,7 @@ exports.createBoard = async (req, res) => {
         // TODO Return a better error
         res.status(400).json(error);
     }
-}
+};
 
 exports.readBoard = async (req, res) => {
     const board = req.board;
@@ -31,7 +31,7 @@ exports.readBoard = async (req, res) => {
         // TODO Return a better error
         res.status(500).json(error);
     }
-}
+};
 
 exports.updateBoard = async (req, res) => {
     const board = req.board;
@@ -49,7 +49,7 @@ exports.updateBoard = async (req, res) => {
         // TODO Return a better error
         res.status(500).json(error);
     }
-}
+};
 
 exports.deleteBoard = async (req, res) => {
     const board = req.board;
@@ -63,4 +63,4 @@ exports.deleteBoard = async (req, res) => {
         // TODO Return a better error
         res.status(500).json(error);
     }
-}
+};

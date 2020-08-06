@@ -1,10 +1,38 @@
 const Task = require('../../models/task');
 
+// Params:
+// completed? true, false (default: all)
+// count? int: the limit of results in the response (default: all)
+// start? int: the number of results to skip before finding the result (default: 0)
+// sortby? createdAt, updatedAt (default: incomplete first)
 exports.readAllTasks = async (req, res) => {
     const board = req.board;
+    
+    const match = {};
+    if (req.query.completed) {
+        match.completed = req.query.completed.toLowerCase() === 'true'
+    }
+
+    const sort = {};
+    if (req.query.sortby) {
+        const parts = req.query.sortby.split(':');
+        sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
+    } else {
+        sort['completed'] = 1;
+    }
+
+    const options = {
+        limit: parseInt(req.query.count),
+        skip: parseInt(req.query.start),
+        sort
+    }
 
     try {
-        await board.populate('tasks').execPopulate();
+        await board.populate({
+            path: 'tasks',
+            match,
+            options
+        }).execPopulate();
         
         res.status(200).json(board.tasks);
     } catch (error) {
@@ -12,7 +40,7 @@ exports.readAllTasks = async (req, res) => {
         // TODO Return a better error
         res.status(500).json(error);
     }
-}
+};
 
 exports.createTask = async (req, res) => {
     const boardId = req.params.boardId;
@@ -31,10 +59,7 @@ exports.createTask = async (req, res) => {
         // TODO Return a better error
         res.status(400).json(error);
     }
-}
-
-// TODO: Reimplement the index route where the result is all the tasks assigned to a user
-// Before: I must implement a system that indicates to whom a task is assigned
+};
 
 exports.readTask = async (req, res) => {
     const taskId = req.params.taskId
@@ -52,7 +77,7 @@ exports.readTask = async (req, res) => {
         // TODO Return a better error
         res.status(500).json(error);
     }
-}
+};
 
 exports.updateTask = async (req, res) => {
     const taskId = req.params.taskId;
@@ -76,7 +101,7 @@ exports.updateTask = async (req, res) => {
         // TODO Return a better error
         res.status(400).json(error);
     }
-}
+};
 
 exports.deleteTask = async (req, res) => {
     const taskId = req.params.taskId
@@ -96,4 +121,4 @@ exports.deleteTask = async (req, res) => {
         // TODO Return a better error
         res.status(500).json(error);
     }
-}
+};
