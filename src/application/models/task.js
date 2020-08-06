@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-const TaskStatusEnum = require('./enums/TaskStatusEnum');
-
 const taskSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -11,11 +9,9 @@ const taskSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
-    status: {
-        type: Number,
-        required: true,
-        enum: Object.values(TaskStatusEnum),
-        default: TaskStatusEnum.TODO
+    completed: {
+        type: Boolean,
+        default: false
     },
     board: {
         type: mongoose.Schema.Types.ObjectId,
