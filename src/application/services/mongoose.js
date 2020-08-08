@@ -9,5 +9,5 @@ exports.connect = async (connURL) => {
         useFindAndModify: false
     });
     console.log("Connected to mongodb with success");
-}
+};
 

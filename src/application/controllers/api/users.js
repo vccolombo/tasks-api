@@ -40,7 +40,6 @@ exports.updateMe = async (req, res) => {
 };
 
 exports.uploadAvatar = async (req, res) => {
-    console.log('upload');
     res.status(201).json();
 };
 

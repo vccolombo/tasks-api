@@ -19,4 +19,4 @@ exports.verifyBoardAuthorization = async (req, res, next) => {
         // TODO Return a better error
         res.status(500).json(error);
     }
-}
+};
