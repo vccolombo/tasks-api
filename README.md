@@ -94,28 +94,17 @@ Response:
 ### Update own profile
 
 - **Path**: PATCH /api/users/me
+- **Body**:
+    - Name (User full name): String | Required
+    - Email: String | Valid email | Required
+    - Password: String | Minimum 8 characters | Required
 
 Example:
 ```
-GET /api/users/me
+PATCH /api/users/me
 ...
-```
 
-Response:
-```json
-{
-    "_id": "5f2ec8a68a598a60026ac31d",
-    "name": "Victor Colombo",
-    "email": "victor@example.com",
-    "createdAt": "2020-08-08T15:45:42.371Z",
-    "updatedAt": "2020-08-08T16:45:58.837Z",
-    "__v": 0
-},
-{
-    "boards": [
-        # your boards
-    ]
-}
+{"name":"Changed name", "email":"changed@example.com", "password":"changedpass"}
 ```
 
 ### Create board
@@ -271,7 +260,7 @@ Response:
 
 ### Update Task
 
-- **Path**: POST /api/boards/:boardId/tasks/:taskId
+- **Path**: PATCH /api/boards/:boardId/tasks/:taskId
 - **Body**: 
     - title: String | Required 
     - description: String
