@@ -8,9 +8,12 @@ const router = express.Router();
 
 router.get('/me', verifyAuthentication, controller.readMe);
 router.patch('/me', verifyAuthentication, controller.updateMe);
+
+router.get('/:userId', verifyAuthentication, controller.readUser);
+
 // /me/avatar expects a form-data field with key 'image' and the jpg/png file as the value
 router.post('/me/avatar', [verifyAuthentication, uploadAvatar], controller.uploadAvatar, uploadAvatarErrorHandler);
 router.delete('/me/avatar', verifyAuthentication, controller.deleteAvatar);
-router.get('/:userId', verifyAuthentication, controller.readUser);
+router.get('/:userId/avatar', controller.readAvatar);
 
 module.exports = router;

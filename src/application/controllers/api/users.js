@@ -67,7 +67,25 @@ exports.deleteAvatar = async (req, res) => {
         // TODO Return a better error
         res.status(500).json(error);
     }
-}
+};
+
+exports.readAvatar = async (req, res) => {
+    const userId = req.params.userId;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user || !user.avatar) {
+            return res.status(404).json();
+        }
+
+        res.set('Content-Type', 'image/jpeg');
+        res.send(user.avatar);
+    } catch (error) {
+        console.error(error);
+        // TODO Return a better error
+        res.status(500).json(error);
+    }
+};
 
 exports.readUser = async (req, res) => {
     const userId = req.params.userId;
