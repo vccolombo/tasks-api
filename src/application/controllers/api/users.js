@@ -22,9 +22,6 @@ exports.updateMe = async (req, res) => {
 
     try {
         const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json();
-        }
 
         Object.keys(data).forEach((update) => {
             user[update] = data[update];
@@ -40,8 +37,37 @@ exports.updateMe = async (req, res) => {
 };
 
 exports.uploadAvatar = async (req, res) => {
-    res.status(201).json();
+    const userId = req.userId;
+    const picture = req.file.buffer;
+
+    try {
+        const user = await User.findById(userId);
+        user.avatar = picture;
+        await user.save();
+
+        res.status(200).json();
+    } catch (error) {
+        console.error(error);
+        // TODO Return a better error
+        res.status(500).json(error);
+    }
 };
+
+exports.deleteAvatar = async (req, res) => {
+    const userId = req.userId;
+
+    try {
+        const user = await User.findById(userId);
+        user.avatar = undefined;
+        await user.save();
+
+        res.status(200).json();
+    } catch (error) {
+        console.error(error);
+        // TODO Return a better error
+        res.status(500).json(error);
+    }
+}
 
 exports.readUser = async (req, res) => {
     const userId = req.params.userId;

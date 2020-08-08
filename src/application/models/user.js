@@ -33,6 +33,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: [8, "Password too short"]
+    },
+    avatar: {
+        type: Buffer
     }
 }, {
     timestamps: true
