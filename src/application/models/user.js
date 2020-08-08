@@ -51,6 +51,7 @@ userSchema.methods.toJSON = function() {
     const userObj = this.toObject();
 
     delete userObj.password;
+    delete userObj.avatar;
 
     return userObj;
 }

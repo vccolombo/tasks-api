@@ -1,3 +1,4 @@
+const { resizeImage } = require('../../libs/images');
 const User = require('../../models/user');
 
 exports.readMe = async (req, res) => {
@@ -42,7 +43,7 @@ exports.uploadAvatar = async (req, res) => {
 
     try {
         const user = await User.findById(userId);
-        user.avatar = picture;
+        user.avatar = await resizeImage(picture, 250, 250);
         await user.save();
 
         res.status(200).json();
