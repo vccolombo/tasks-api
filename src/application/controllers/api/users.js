@@ -39,6 +39,11 @@ exports.updateMe = async (req, res) => {
     }
 };
 
+exports.uploadAvatar = async (req, res) => {
+    console.log('upload');
+    res.status(201).json();
+};
+
 exports.readUser = async (req, res) => {
     const userId = req.params.userId;
 
