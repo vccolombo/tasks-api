@@ -87,20 +87,3 @@ exports.readAvatar = async (req, res) => {
         res.status(500).json(error);
     }
 };
-
-exports.readUser = async (req, res) => {
-    const userId = req.params.userId;
-
-    try {
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json();
-        }
-        
-        res.status(200).send(user);
-    } catch (error) {
-        console.error(error);
-        // TODO Return a better error
-        res.status(500).json(error);
-    }
-};
