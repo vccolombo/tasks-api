@@ -23,7 +23,6 @@ exports.readBoard = async (req, res) => {
 
   try {
     await board.populate('tasks').execPopulate();
-    const { tasks } = board;
 
     res.status(200).json(board);
   } catch (error) {
