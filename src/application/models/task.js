@@ -1,26 +1,29 @@
 const mongoose = require('mongoose');
 
-const taskSchema = new mongoose.Schema({
+const taskSchema = new mongoose.Schema(
+  {
     title: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     description: {
-        type: String,
-        default: ""
+      type: String,
+      default: '',
     },
     completed: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false,
     },
     board: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Board'
-    }
-}, {
-    timestamps: true
-});
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'Board',
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 const Task = mongoose.model('Task', taskSchema);
 

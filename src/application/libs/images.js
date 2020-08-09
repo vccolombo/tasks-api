@@ -1,5 +1,11 @@
 const sharp = require('sharp');
 
 exports.resizeImage = (image, width, height) => {
-    return sharp(image).resize({ width, height }).png().toBuffer();
+  return sharp(image)
+    .resize({
+      width,
+      height,
+    })
+    .png()
+    .toBuffer();
 };
