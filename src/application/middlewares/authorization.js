@@ -18,7 +18,6 @@ exports.verifyBoardAuthorization = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(500).json(error);
   }

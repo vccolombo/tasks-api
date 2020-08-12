@@ -12,7 +12,6 @@ exports.createBoard = async (req, res) => {
 
     res.status(201).json(board);
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(400).json(error);
   }
@@ -26,7 +25,6 @@ exports.readBoard = async (req, res) => {
 
     res.status(200).json(board);
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(500).json(error);
   }
@@ -44,7 +42,6 @@ exports.updateBoard = async (req, res) => {
 
     res.status(200).json(board);
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(500).json(error);
   }
@@ -58,7 +55,6 @@ exports.deleteBoard = async (req, res) => {
 
     res.status(200).json(board);
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(500).json(error);
   }

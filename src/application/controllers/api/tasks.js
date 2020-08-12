@@ -38,7 +38,6 @@ exports.readAllTasks = async (req, res) => {
 
     res.status(200).json(board.tasks);
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(500).json(error);
   }
@@ -57,7 +56,6 @@ exports.createTask = async (req, res) => {
 
     res.status(201).json(task);
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(400).json(error);
   }
@@ -78,7 +76,6 @@ exports.readTask = async (req, res) => {
 
     res.status(200).json(task);
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(500).json(error);
   }
@@ -105,7 +102,6 @@ exports.updateTask = async (req, res) => {
 
     res.status(200).json(task);
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(400).json(error);
   }
@@ -128,7 +124,6 @@ exports.deleteTask = async (req, res) => {
 
     res.status(200).json(task);
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(500).json(error);
   }

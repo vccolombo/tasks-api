@@ -13,7 +13,6 @@ exports.signup = async (req, res) => {
       token,
     });
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(400).json(error);
   }
@@ -31,7 +30,6 @@ exports.login = async (req, res) => {
       token,
     });
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(400).json(error);
   }

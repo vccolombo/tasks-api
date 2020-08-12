@@ -9,7 +9,6 @@ exports.verifyAuthentication = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.error(error);
     res.status(401).json({
       error: 'Authentication failed',
     });

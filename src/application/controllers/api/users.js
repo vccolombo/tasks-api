@@ -14,7 +14,6 @@ exports.readMe = async (req, res) => {
       boards,
     });
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(500).json(error);
   }
@@ -34,7 +33,6 @@ exports.updateMe = async (req, res) => {
 
     res.status(200).json(user);
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(400).json(error);
   }
@@ -51,7 +49,6 @@ exports.uploadAvatar = async (req, res) => {
 
     res.status(200).json();
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(500).json(error);
   }
@@ -67,7 +64,6 @@ exports.deleteAvatar = async (req, res) => {
 
     res.status(200).json();
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(500).json(error);
   }
@@ -85,7 +81,6 @@ exports.readAvatar = async (req, res) => {
     res.set('Content-Type', 'image/jpeg');
     res.send(user.avatar);
   } catch (error) {
-    console.error(error);
     // TODO Return a better error
     res.status(500).json(error);
   }
