@@ -1,26 +1,19 @@
 const request = require('supertest');
-const mongoose = require('mongoose');
 
 const app = require('../src/application/app');
-const mongodb = require('../src/application/services/mongoose');
 const User = require('../src/application/models/user');
-const { authSign, authVerify } = require('../src/application/libs/auth');
-
-mongodb.connect('mongodb://localhost:27017/task-manager-test');
-
-const userOneId = mongoose.Types.ObjectId();
-const userOneData = {
-  _id: userOneId,
-  name: 'Tester One',
-  email: 'tester1@example.com',
-  password: '56what!!42',
-};
-let userOneToken = authSign({ _id: userOneId });
+const { authVerify } = require('../src/application/libs/auth');
+const {
+  userOneId,
+  userOneData,
+  userOneToken,
+  boardId,
+  boardData,
+  setupDatabase,
+} = require('./fixtures/db');
 
 beforeEach(async () => {
-  await User.deleteMany();
-
-  const userOne = await User.create(userOneData);
+  await setupDatabase();
 });
 
 test('Should signup a new user', async () => {
@@ -90,7 +83,11 @@ test('Should get profile for user', async () => {
       name: userOneData.name,
       email: userOneData.email,
     },
-    boards: [],
+    boards: [
+      {
+        name: boardData.name,
+      },
+    ],
   });
 });
 
@@ -107,4 +104,15 @@ test('Should not get profile for user with wrong token', async () => {
 
 test('Should not get profile for unauthenticated user', async () => {
   await request(app).get('/api/users/me').send().expect(401);
+});
+
+test('Should upload avatar image', async () => {
+  await request(app)
+    .post('/api/users/me/avatar')
+    .set('Authorization', `Bearer ${userOneToken}`)
+    .attach('image', 'tests/fixtures/profile-pic.jpg')
+    .expect(200);
+
+  const user = await User.findById(userOneId);
+  expect(user.avatar).toEqual(expect.any(Buffer));
 });
